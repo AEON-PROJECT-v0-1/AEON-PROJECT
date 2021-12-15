@@ -6,7 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.nimbusds.jose.JWSAlgorithm;
+import com.nimbusds.jose.JWSHeader;
+import com.nimbusds.jose.JWSSigner;
+import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.SignedJWT;
 @Component
 
 public class JwtUtil {
@@ -22,6 +27,11 @@ public class JwtUtil {
 			JWTClaimsSet.Builder builder = new JWTClaimsSet.Builder();
 			builder.claim(USER, user);
 			builder.expirationTime(generateExpirationDate());
+			JWTClaimsSet claimsSet = builder.build();
+			SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256),claimsSet);
+			JWSSigner signer = new MACSigner(Secret.getBytes());
+			signedJWT.sign(signer);
+			token = signedJWT.serialize();
 		}catch(Exception e){
 			logger.error(e.getMessage());
 		}
@@ -32,4 +42,7 @@ public class JwtUtil {
 	public Date generateExpirationDate() {
 		return new Date(System.currentTimeMillis()+864000000);		
 	}
+	
+	
+	
 }
