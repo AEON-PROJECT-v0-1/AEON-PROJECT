@@ -21,6 +21,7 @@ public class Role extends BaseEntity {
     @JoinTable(name = "t_role_permission", joinColumns = {@JoinColumn(name = "role_id")}, inverseJoinColumns = {@JoinColumn(name = "permission_id")})
     private Set<Permission> permissions = new HashSet<>();
 
+<<<<<<< HEAD
 	public String getRoleKey() {
 		return roleName;
 	}
@@ -30,5 +31,7 @@ public class Role extends BaseEntity {
 		return permissions;
 	}
 
+=======
+>>>>>>> db0bab5fa9bab12543c8776ae9ef20e29d15bce3
 
 }

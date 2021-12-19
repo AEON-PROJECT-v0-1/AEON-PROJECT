@@ -19,6 +19,7 @@ public class User extends BaseEntity {
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinTable(name = "t_user_role", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<Role> roles = new HashSet<>();
+<<<<<<< HEAD
 
 	public String getUsername() {
 		return username;
@@ -45,4 +46,6 @@ public class User extends BaseEntity {
 		
 	}
     
+=======
+>>>>>>> db0bab5fa9bab12543c8776ae9ef20e29d15bce3
 }
