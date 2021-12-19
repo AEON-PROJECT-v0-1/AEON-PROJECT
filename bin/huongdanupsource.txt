@@ -1,0 +1,10 @@
+------------Clone Source--------------
+b1: Clone source bang lenh git base here
+------------Commit Source--------------
+b1: edit source code
+b2: git add . neu them file moi
+b3: git commit -m "Comment o day"
+b4: git push
+
+------------Update Source--------------
+b1: git pull

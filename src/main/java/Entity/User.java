@@ -3,14 +3,7 @@ package Entity;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.management.relation.Role;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +17,7 @@ public class User extends BaseEntity{
 
 	 private String password;
 	 
-	  @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+	  	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	    @JoinTable(name = "t_user_role", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
 	    private Set<Role> roles = new HashSet<>();
 
@@ -43,25 +36,8 @@ public class User extends BaseEntity{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
-
-	public User(String username, String password, Set<Role> roles) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.roles = roles;
-	}
-
-	public User() {
-		super();
-	}
+	 
+	
 	  
 	  
 }
