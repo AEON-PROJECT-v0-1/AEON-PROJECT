@@ -23,7 +23,7 @@ public abstract class BaseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private boolean isDeleted = false;
+    private boolean deleted = false;
 
     @CreatedDate
     private Date createdAt;
@@ -31,9 +31,7 @@ public abstract class BaseEntity implements Serializable {
     @LastModifiedDate
     private Date updatedAt;
 
-    @CreatedBy
-    private String createdBy;
+    private Long createdBy;
 
-    @LastModifiedBy
-    private String updatedBy;
+    private Long updatedBy;
 }

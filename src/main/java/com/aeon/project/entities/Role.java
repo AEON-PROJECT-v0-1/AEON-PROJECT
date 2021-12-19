@@ -21,14 +21,6 @@ public class Role extends BaseEntity {
     @JoinTable(name = "t_role_permission", joinColumns = {@JoinColumn(name = "role_id")}, inverseJoinColumns = {@JoinColumn(name = "permission_id")})
     private Set<Permission> permissions = new HashSet<>();
 
-	public String getRoleKey() {
-		return roleName;
-	}
-
-	public Set<Permission> getPermissions() {
-		// TODO Auto-generated method stub
-		return permissions;
-	}
 
 
 }
