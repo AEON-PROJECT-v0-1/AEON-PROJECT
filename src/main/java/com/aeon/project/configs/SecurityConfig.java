@@ -1,4 +1,4 @@
-package Security;
+package com.aeon.project.configs;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;

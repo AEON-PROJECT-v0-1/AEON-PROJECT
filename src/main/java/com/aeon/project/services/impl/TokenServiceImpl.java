@@ -1,13 +1,13 @@
-package Service;
+package com.aeon.project.services.impl;
 
+import com.aeon.project.entities.Token;
+import com.aeon.project.repositories.TokenRepository;
+import com.aeon.project.services.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import Entity.Token;
-import Repository.TokenRepository;
-
 @Service
-public class TokenServiceImpl implements TokenService {
+public class TokenServiceImpl extends BaseServiceImpl implements TokenService {
 	  @Autowired
 	  private TokenRepository tokenRepository;
 	  
