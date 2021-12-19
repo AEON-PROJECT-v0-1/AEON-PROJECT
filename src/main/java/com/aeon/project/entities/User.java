@@ -12,6 +12,7 @@ import java.util.Set;
 @Getter
 @Setter
 public class User extends BaseEntity {
+	private long id;
     private String username;
 
     private String password;
@@ -19,7 +20,6 @@ public class User extends BaseEntity {
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinTable(name = "t_user_role", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<Role> roles = new HashSet<>();
-<<<<<<< HEAD
 
 	public String getUsername() {
 		return username;
@@ -27,6 +27,14 @@ public class User extends BaseEntity {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public Set<Role> getRoles() {
@@ -37,15 +45,13 @@ public class User extends BaseEntity {
 		this.roles = roles;
 	}
 
-	public CharSequence getPassword() {
-		return password;
+	public long getId() {
+		return id;
 	}
 
-	public void setPassword(String encode) {
-		this.password = password;
-		
+	public void setId(long id) {
+		this.id = id;
 	}
-    
-=======
->>>>>>> db0bab5fa9bab12543c8776ae9ef20e29d15bce3
+
+	
 }
