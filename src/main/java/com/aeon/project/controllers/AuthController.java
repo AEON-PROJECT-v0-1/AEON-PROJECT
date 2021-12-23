@@ -6,6 +6,7 @@ import com.aeon.project.services.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +17,19 @@ public class AuthController {
 	@Autowired
 	private UserService userService;
 	
+	@SuppressWarnings("unlikely-arg-type")
 	@PostMapping("/register")
-	public User register(@RequestBody User user) {
+	public ResponseEntity<?> register(@RequestBody User user) {
 		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-		return userService.createUser(user);
-		
-	}
+		UserPrincipal userPrincipal = userService.findByUsername(user.getUsername());
+		if(user.equals(userPrincipal.getUsername())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("tài khoản đã tồn tại");
+		}else {
+		userService.createUser(user);
+        return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
+		}
+        
+	}	
 
 	@Autowired
 	private TokenService tokenService;
