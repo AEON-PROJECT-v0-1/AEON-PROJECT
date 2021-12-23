@@ -16,7 +16,7 @@ public class JwtUtil {
 	
 	private static final String USER ="user";
 	
-	private static final String SECRET ="dayladoancodebimat";
+	private static final String SECRET ="dayladoancodebimatdaioiladausdasjdaoishdaoisdhaoisdgaoidgai";
 	
 	public String genreteToken(UserPrincipal user) {
 		String token = null;
