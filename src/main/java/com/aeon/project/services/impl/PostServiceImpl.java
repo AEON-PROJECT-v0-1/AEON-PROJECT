@@ -15,7 +15,7 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public PostPrincipal findPostAddress(String postNo) {
-		Post post = postRepository.findPostAddress(postNo);
+		Post post = postRepository.findByPostNo(postNo);
 		PostPrincipal postPrincipal = new PostPrincipal();
 		
 		return postPrincipal;
