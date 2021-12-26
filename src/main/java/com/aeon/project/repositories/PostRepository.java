@@ -2,8 +2,6 @@ package com.aeon.project.repositories;
 
 import com.aeon.project.entities.Post;
 
-import antlr.collections.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
