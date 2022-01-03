@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter@Setter
-public class PostPrincipal {
+public class PostPrincipal  {
 	
 	private String postNo;
 
