@@ -21,10 +21,10 @@ public class PostController {
 		List<Post> post = postService.GetAllPost();
         return post;
 	}
-	@PostMapping("/post")
-	public ResponseEntity<?> login(@RequestBody Post post) {
-		PostPrincipal postAddress = postService.findPostAddress(post.getPostNo());
-		return ResponseEntity.ok(postAddress);
+	@GetMapping("/post")
+	public List<Post> login(@RequestBody Post post) {
+		List<Post> postAddress = postService.findPostAddress(post.getAddressName());
+		return postAddress;
 	}
 	@PostMapping("/insert")
 	public ResponseEntity<?> Insert(@RequestBody Post post) {
@@ -32,10 +32,19 @@ public class PostController {
         return new ResponseEntity<>("Insert Post successfully", HttpStatus.OK);
 		
 	}
+	
 	@PutMapping("/UpdatePostById")
-	public ResponseEntity<?> Update(Iterable<Long> id) {
-		postService.UpdatePostById(id);
-        return new ResponseEntity<>("Insert Post successfully", HttpStatus.OK);
+	public ResponseEntity<?> Update(@RequestBody Post post) {
+		
+		postService.UpdatePostById(post.getId(), post);
+        return new ResponseEntity<>("Update Post successfully", HttpStatus.OK);
+		
+	}
+	@DeleteMapping("/DeletePostById")
+		public ResponseEntity<?> Delete(@RequestBody Post post) {
+		
+		postService.deletePost(post.getId());
+        return new ResponseEntity<>("Delete Post successfully", HttpStatus.OK);
 		
 	}
 	

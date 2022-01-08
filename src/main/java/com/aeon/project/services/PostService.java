@@ -2,15 +2,18 @@ package com.aeon.project.services;
 
 import java.util.List;
 
-import com.aeon.project.commons.PostPrincipal;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 import com.aeon.project.entities.Post;
 
 
 public interface PostService {
-	PostPrincipal findPostAddress(String postNo);
+	List<Post> findPostAddress(String postNo);
 	Post createPost(Post post);
 	List<Post> GetAllPost();
-	List<Post> UpdatePostById(Iterable<Long> id);
+	Post UpdatePostById(long id, Post post);
+	ResponseEntity<HttpStatus> deletePost(long id);
 
 
 }
