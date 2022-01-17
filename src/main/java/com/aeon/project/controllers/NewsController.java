@@ -1,5 +1,6 @@
 package com.aeon.project.controllers;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,29 +21,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aeon.project.entities.Post;
-import com.aeon.project.services.PostService;
+
+import com.aeon.project.entities.News;
+import com.aeon.project.services.NewsService;
 
 @RestController
-@RequestMapping("/api/address")
-public class PostController {
+@RequestMapping("/api/news")
+public class NewsController {
 	@Autowired
-	private PostService postService;
+	private NewsService newsService;
 	
-	  private Sort.Direction getSortDirection(String direction) {
-		    if (direction.equals("asc")) {
-		      return Sort.Direction.ASC;
-		    } else if (direction.equals("desc")) {
-		      return Sort.Direction.DESC;
-		    }
+	private Sort.Direction getSortDirection(String direction) {
+	    if (direction.equals("asc")) {
+	      return Sort.Direction.ASC;
+	    } else if (direction.equals("desc")) {
+	      return Sort.Direction.DESC;
+	    }
 
-		    return Sort.Direction.ASC;
-	  }
-	  
-	@GetMapping("/GetAllPost")
+	    return Sort.Direction.ASC;
+  }
+	
+	@GetMapping("/getAll")
+	public List<News> GetAllNews()  throws SQLException{
+		List<News> news = newsService.GetAllNews();
+        return news;
+	}
+
+	@GetMapping("/getAllNews")
 	public ResponseEntity<?> GetPost(
 		      @RequestParam(defaultValue = "0") int page,
-		      @RequestParam(defaultValue = "4") int size,
+		      @RequestParam(defaultValue = "6") int size,
 		      @RequestParam(defaultValue = "id,desc") String[] sort) {
 		
 		 try {
@@ -58,18 +66,18 @@ public class PostController {
 		      } else {
 		        // sort=[field, direction]
 		        orders.add(new Order(getSortDirection(sort[1]), sort[0]));
-		      }
-		      List<Post> post = null;
+		      }	
+		      List<News> news = null;
 				try {
-					post = postService.GetAllPost();
+					news = newsService.GetAllNews();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				Page<Post> pageTuts = null;
-		      if (post.isEmpty()) {
+				Page<News> pageTuts = null;
+		      if (news.isEmpty()) {
 		        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		      }else {
-			      pageTuts = postService.GetAllPost(Sort.by(orders), page, size, sort);
+			      pageTuts =  newsService.GetAllNews(Sort.by(orders), page, size, sort);
 			      if (pageTuts == null) {
 			      Map<String, Object> response = new HashMap<>();
 			      response.put("currentPage", pageTuts.getNumber());
@@ -83,36 +91,31 @@ public class PostController {
 		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		    }
 	}
-	@GetMapping("/post")
-	public List<Post> findPostAddress(@RequestBody Post post) {
-		List<Post> postAddress = postService.findPostAddress(post.getAddressName());
-		return postAddress;
-	}
+	
 	@PostMapping("/insert")
-	public ResponseEntity<?> Insert(@RequestBody Post post) {
-		 try {
-		      Post _post = postService.createPost(post);
-		      return new ResponseEntity<>(_post, HttpStatus.CREATED);
-		    } catch (Exception e) {
-		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		    }
-		
+	public ResponseEntity<?> Insert(@RequestBody News news) {
+		newsService.createNews(news);
+        return new ResponseEntity<>("Insert Post successfully", HttpStatus.OK);
 		
 	}
 	
-	@PutMapping("/UpdatePostById")
-	public ResponseEntity<?> Update(@RequestBody Post post) {
-		
-		postService.UpdatePostById(post.getId(), post);
+	@GetMapping("/getNews")
+	public List<News> GetNews(@RequestBody News news) {
+		List<News> listNews = newsService.GetNews(news.getNewsNo());
+        return listNews;
+	}
+	
+	@PutMapping("/updateNews")
+	public ResponseEntity<?> Update(@RequestBody News news) {	
+		newsService.UpdateNewsById(news.getId(), news);
         return new ResponseEntity<>("Update Post successfully", HttpStatus.OK);
 		
 	}
+		
 	@DeleteMapping("/DeletePostById")
-		public ResponseEntity<?> Delete(@RequestBody Post post) {
-		
-		postService.deletePost(post.getId());
-        return new ResponseEntity<>("Delete Post successfully", HttpStatus.OK);
-		
+	public ResponseEntity<?> Delete(@RequestBody News news) {
+		newsService.deleteNews(news.getId());
+		return new ResponseEntity<>("Delete Post successfully", HttpStatus.OK);
 	}
 	
 }
