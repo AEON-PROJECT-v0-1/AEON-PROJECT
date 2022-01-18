@@ -27,4 +27,22 @@ public class ProductController {
         productService.createProduct(product);
         return new ResponseEntity<>("Insert Product successfully", HttpStatus.OK);
     }
+
+    @PostMapping("/update")
+    public ResponseEntity<?> updateProduct(@PathVariable("id") long id, @RequestBody Product pUpdate){
+        boolean updateResult = productService.updateProduct(id, pUpdate);
+        if(updateResult)
+            return new ResponseEntity<>("Update Product Successfully with id : " + id, HttpStatus.OK);
+        else
+            return new ResponseEntity<>("Product not found with id : " + id,HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable("id") long id){
+        boolean updateResult = productService.deleteProduct(id);
+        if(updateResult)
+            return new ResponseEntity<>("Delete Product successfully with id : " + id,HttpStatus.NO_CONTENT);
+        else
+            return new ResponseEntity<>("Delete Product failed with id : " + id,HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
